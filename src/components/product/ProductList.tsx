@@ -1,7 +1,7 @@
-import { useProductStore } from '@/hooks/useProductStore';
-import ProductCard from '@/components/product/ProductCard';
-import ProductSkeleton from '@/components/product/ProductSkeleton';
-import { useCartStore } from '@/hooks/useCartStore';
+import ProductCard from "@/components/product/ProductCard";
+import ProductSkeleton from "@/components/product/ProductSkeleton";
+import { useCartStore } from "@/hooks/useCartStore";
+import { useProductStore } from "@/hooks/useProductStore";
 
 const ProductList = () => {
   const { products, isProductsLoading } = useProductStore();
@@ -38,4 +38,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList; 
+export default ProductList;

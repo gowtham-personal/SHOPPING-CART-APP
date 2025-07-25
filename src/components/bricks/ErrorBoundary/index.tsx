@@ -1,4 +1,4 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { Component, type ErrorInfo, type ReactNode } from "react";
 
 interface ErrorBoundaryState {
   error?: Error;
@@ -10,11 +10,14 @@ interface ErrorBoundaryProps {
   FallbackComponent: () => React.ReactElement;
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   public state: ErrorBoundaryState = {};
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.log('Uncaught error:', error, errorInfo);
+    console.log("Uncaught error:", error, errorInfo);
     this.setState({ error, errorInfo });
   }
 

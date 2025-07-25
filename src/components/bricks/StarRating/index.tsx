@@ -1,4 +1,4 @@
-import { Star } from 'lucide-react';
+import { Star } from "lucide-react";
 
 export interface StarRatingProps {
   rating: number;
@@ -7,7 +7,12 @@ export interface StarRatingProps {
   className?: string;
 }
 
-export const StarRating = ({ rating, showCount = false, count, className = '' }: StarRatingProps) => {
+export const StarRating = ({
+  rating,
+  showCount = false,
+  count,
+  className = "",
+}: StarRatingProps) => {
   const renderStars = (rating: number) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -19,7 +24,7 @@ export const StarRating = ({ rating, showCount = false, count, className = '' }:
           key={i}
           className="h-4 w-4 fill-yellow-400 text-yellow-400"
           aria-hidden="true"
-        />
+        />,
       );
     }
 
@@ -29,7 +34,7 @@ export const StarRating = ({ rating, showCount = false, count, className = '' }:
           key="half"
           className="h-4 w-4 fill-yellow-400/50 text-yellow-400"
           aria-hidden="true"
-        />
+        />,
       );
     }
 
@@ -40,7 +45,7 @@ export const StarRating = ({ rating, showCount = false, count, className = '' }:
           key={`empty-${i}`}
           className="h-4 w-4 text-gray-300"
           aria-hidden="true"
-        />
+        />,
       );
     }
 
@@ -49,13 +54,14 @@ export const StarRating = ({ rating, showCount = false, count, className = '' }:
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div className="flex items-center" aria-label={`Rating: ${rating} out of 5 stars`}>
+      <div
+        className="flex items-center"
+        aria-label={`Rating: ${rating} out of 5 stars`}
+      >
         {renderStars(rating)}
       </div>
       {showCount && count !== undefined && (
-        <span className="text-sm text-gray-500">
-          ({count} reviews)
-        </span>
+        <span className="text-sm text-gray-500">({count} reviews)</span>
       )}
     </div>
   );

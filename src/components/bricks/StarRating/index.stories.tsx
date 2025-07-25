@@ -1,30 +1,30 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { StarRating } from './index';
+import { StarRating } from "./index";
 
 const meta = {
-  title: 'Bricks/StarRating',
+  title: "Bricks/StarRating",
   component: StarRating,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     rating: {
-      control: { type: 'number', min: 0, max: 5, step: 0.1 },
-      description: 'Rating value from 0 to 5',
+      control: { type: "number", min: 0, max: 5, step: 0.1 },
+      description: "Rating value from 0 to 5",
     },
     showCount: {
-      control: 'boolean',
-      description: 'Whether to show the review count',
+      control: "boolean",
+      description: "Whether to show the review count",
     },
     count: {
-      control: { type: 'number', min: 0 },
-      description: 'Number of reviews',
+      control: { type: "number", min: 0 },
+      description: "Number of reviews",
     },
     className: {
-      control: 'text',
-      description: 'Additional CSS classes',
+      control: "text",
+      description: "Additional CSS classes",
     },
   },
   decorators: [
@@ -83,7 +83,7 @@ export const RatingVariations: Story = {
     return (
       <div className="space-y-4">
         <h3 className="text-lg font-semibold mb-4">Different Rating Values</h3>
-        {ratings.map(rating => (
+        {ratings.map((rating) => (
           <div key={rating} className="flex items-center gap-4">
             <StarRating rating={rating} />
             <span className="text-sm text-gray-600">{rating} stars</span>
@@ -109,7 +109,7 @@ export const WithAndWithoutCounts: Story = {
             <StarRating rating={2.8} />
           </div>
         </div>
-        
+
         <div>
           <h3 className="text-lg font-semibold mb-4">With Review Counts</h3>
           <div className="space-y-3">
@@ -134,12 +134,17 @@ export const CustomStyling: Story = {
           <StarRating rating={4.3} className="mb-2" />
           <p className="text-sm text-gray-600">Default styling</p>
         </div>
-        
+
         <div className="p-4 bg-blue-50 rounded-lg">
-          <StarRating rating={4.3} showCount={true} count={156} className="mb-2" />
+          <StarRating
+            rating={4.3}
+            showCount={true}
+            count={156}
+            className="mb-2"
+          />
           <p className="text-sm text-gray-600">With review count</p>
         </div>
-        
+
         <div className="p-4 bg-green-50 rounded-lg">
           <StarRating rating={4.3} className="scale-125 mb-2" />
           <p className="text-sm text-gray-600">Scaled up with CSS</p>
@@ -155,20 +160,27 @@ export const ProductShowcase: Story = {
   },
   render: () => {
     const products = [
-      { name: 'Premium Headphones', rating: 4.8, reviews: 324 },
-      { name: 'Wireless Mouse', rating: 4.2, reviews: 89 },
-      { name: 'Mechanical Keyboard', rating: 4.6, reviews: 156 },
-      { name: 'USB-C Hub', rating: 3.9, reviews: 42 },
-      { name: 'Monitor Stand', rating: 4.1, reviews: 78 },
+      { name: "Premium Headphones", rating: 4.8, reviews: 324 },
+      { name: "Wireless Mouse", rating: 4.2, reviews: 89 },
+      { name: "Mechanical Keyboard", rating: 4.6, reviews: 156 },
+      { name: "USB-C Hub", rating: 3.9, reviews: 42 },
+      { name: "Monitor Stand", rating: 4.1, reviews: 78 },
     ];
 
     return (
       <div className="space-y-4">
         <h3 className="text-lg font-semibold mb-4">Product Ratings Example</h3>
-        {products.map(product => (
-          <div key={product.name} className="flex items-center justify-between p-3 border rounded-lg">
+        {products.map((product) => (
+          <div
+            key={product.name}
+            className="flex items-center justify-between p-3 border rounded-lg"
+          >
             <span className="font-medium">{product.name}</span>
-            <StarRating rating={product.rating} showCount={true} count={product.reviews} />
+            <StarRating
+              rating={product.rating}
+              showCount={true}
+              count={product.reviews}
+            />
           </div>
         ))}
       </div>
@@ -181,6 +193,6 @@ export const InteractivePlayground: Story = {
     rating: 3.7,
     showCount: true,
     count: 127,
-    className: '',
+    className: "",
   },
-}; 
+};

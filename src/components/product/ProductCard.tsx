@@ -1,8 +1,10 @@
-import { Plus } from 'lucide-react';
-import type { Product } from '@/interfaces/product';
-import { Card, Button, StarRating, Text } from '@/components/bricks';
-import { useCartStore } from '@/hooks/useCartStore';
-import QuantityControls from '../cart/QuantityControls';
+import { Plus } from "lucide-react";
+
+import { Button, Card, StarRating, Text } from "@/components/bricks";
+import { useCartStore } from "@/hooks/useCartStore";
+import type { Product } from "@/interfaces/product";
+
+import QuantityControls from "../cart/QuantityControls";
 
 export interface ProductCardProps {
   product: Product;
@@ -18,11 +20,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   const checkItemInCart = (id: number) => {
-    return cart.items.some((item: { product: Product; quantity: number }) => item.product.id === id);
+    return cart.items.some(
+      (item: { product: Product; quantity: number }) => item.product.id === id,
+    );
   };
 
   const getItemQuantity = (id: number) => {
-    const item = cart.items.find((item: { product: Product; quantity: number }) => item.product.id === id);
+    const item = cart.items.find(
+      (item: { product: Product; quantity: number }) => item.product.id === id,
+    );
     return item ? item.quantity : 0;
   };
 
@@ -101,4 +107,4 @@ const ProductCard = ({ product }: ProductCardProps) => {
   );
 };
 
-export default ProductCard; 
+export default ProductCard;

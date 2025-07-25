@@ -1,6 +1,7 @@
-import { act, renderHook, waitFor } from '@/test-utils';
-import type { Product } from '@/interfaces/product';
-import { useProductStore } from './useProductStore';
+import type { Product } from "@/interfaces/product";
+import { act, renderHook, waitFor } from "@/test-utils";
+
+import { useProductStore } from "./useProductStore";
 
 // Mock fetch globally
 const mockFetch = jest.fn();
@@ -19,32 +20,32 @@ afterAll(() => {
 const mockProducts: Product[] = [
   {
     id: 1,
-    title: 'Test Product 1',
+    title: "Test Product 1",
     price: 29.99,
-    description: 'Test description 1',
-    category: 'electronics',
-    image: 'https://example.com/image1.jpg',
-    rating: { rate: 4.5, count: 120 }
+    description: "Test description 1",
+    category: "electronics",
+    image: "https://example.com/image1.jpg",
+    rating: { rate: 4.5, count: 120 },
   },
   {
     id: 2,
-    title: 'Test Product 2',
+    title: "Test Product 2",
     price: 49.99,
-    description: 'Test description 2',
-    category: 'clothing',
-    image: 'https://example.com/image2.jpg',
-    rating: { rate: 3.8, count: 85 }
-  }
+    description: "Test description 2",
+    category: "clothing",
+    image: "https://example.com/image2.jpg",
+    rating: { rate: 3.8, count: 85 },
+  },
 ];
 
-describe('useProductStore', () => {
+describe("useProductStore", () => {
   // Helper function to reset store state
   const resetStore = (result: any) => {
     if (result.current) {
       act(() => {
         result.current.setProducts([]);
         result.current.setIsProductsLoading(false);
-        result.current.setProductsError('');
+        result.current.setProductsError("");
       });
     }
   };
@@ -55,17 +56,17 @@ describe('useProductStore', () => {
     jest.clearAllMocks();
   });
 
-  it('should initialize with default state', () => {
+  it("should initialize with default state", () => {
     const { result } = renderHook(() => useProductStore());
     resetStore(result);
 
     expect(result.current.products).toEqual([]);
     expect(result.current.isProductsLoading).toBe(false);
-    expect(result.current.productsError).toBe('');
+    expect(result.current.productsError).toBe("");
   });
 
-  describe('setProducts', () => {
-    it('should set products correctly', () => {
+  describe("setProducts", () => {
+    it("should set products correctly", () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
@@ -77,7 +78,7 @@ describe('useProductStore', () => {
       expect(result.current.products).toHaveLength(2);
     });
 
-    it('should replace existing products when setting new products', () => {
+    it("should replace existing products when setting new products", () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
@@ -98,7 +99,7 @@ describe('useProductStore', () => {
       expect(result.current.products).toHaveLength(1);
     });
 
-    it('should handle empty products array', () => {
+    it("should handle empty products array", () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
@@ -111,8 +112,8 @@ describe('useProductStore', () => {
     });
   });
 
-  describe('setIsProductsLoading', () => {
-    it('should set loading state correctly', () => {
+  describe("setIsProductsLoading", () => {
+    it("should set loading state correctly", () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
@@ -130,11 +131,11 @@ describe('useProductStore', () => {
     });
   });
 
-  describe('setProductsError', () => {
-    it('should set error message correctly', () => {
+  describe("setProductsError", () => {
+    it("should set error message correctly", () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
-      const errorMessage = 'Failed to fetch products';
+      const errorMessage = "Failed to fetch products";
 
       act(() => {
         result.current.setProductsError(errorMessage);
@@ -143,26 +144,26 @@ describe('useProductStore', () => {
       expect(result.current.productsError).toBe(errorMessage);
     });
 
-    it('should clear error message when setting empty string', () => {
+    it("should clear error message when setting empty string", () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
       act(() => {
-        result.current.setProductsError('Some error');
+        result.current.setProductsError("Some error");
       });
 
-      expect(result.current.productsError).toBe('Some error');
+      expect(result.current.productsError).toBe("Some error");
 
       act(() => {
-        result.current.setProductsError('');
+        result.current.setProductsError("");
       });
 
-      expect(result.current.productsError).toBe('');
+      expect(result.current.productsError).toBe("");
     });
   });
 
-  describe('fetchProducts', () => {
-    it('should fetch products successfully', async () => {
+  describe("fetchProducts", () => {
+    it("should fetch products successfully", async () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
@@ -176,19 +177,19 @@ describe('useProductStore', () => {
 
       expect(mockFetch).toHaveBeenCalledTimes(1);
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://equalexperts.github.io/frontend-take-home-test-data/products.json'
+        "https://equalexperts.github.io/frontend-take-home-test-data/products.json",
       );
       expect(result.current.products).toEqual(mockProducts);
       expect(result.current.isProductsLoading).toBe(false);
-      expect(result.current.productsError).toBe('');
+      expect(result.current.productsError).toBe("");
     });
 
-    it('should set loading state during fetch', async () => {
+    it("should set loading state during fetch", async () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
       let resolvePromise: (value: any) => void;
-      const fetchPromise = new Promise(resolve => {
+      const fetchPromise = new Promise((resolve) => {
         resolvePromise = resolve;
       });
 
@@ -214,11 +215,11 @@ describe('useProductStore', () => {
       });
     });
 
-    it('should handle fetch error and set error message', async () => {
+    it("should handle fetch error and set error message", async () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
-      mockFetch.mockRejectedValueOnce(new Error('Network error'));
+      mockFetch.mockRejectedValueOnce(new Error("Network error"));
 
       await act(async () => {
         await result.current.fetchProducts();
@@ -226,16 +227,19 @@ describe('useProductStore', () => {
 
       expect(result.current.products).toEqual([]);
       expect(result.current.isProductsLoading).toBe(false);
-      expect(result.current.productsError).toBe('Error fetching products');
-      expect(console.error).toHaveBeenCalledWith('Error fetching products:', expect.any(Error));
+      expect(result.current.productsError).toBe("Error fetching products");
+      expect(console.error).toHaveBeenCalledWith(
+        "Error fetching products:",
+        expect.any(Error),
+      );
     });
 
-    it('should handle JSON parsing error', async () => {
+    it("should handle JSON parsing error", async () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
       mockFetch.mockResolvedValueOnce({
-        json: jest.fn().mockRejectedValueOnce(new Error('Invalid JSON')),
+        json: jest.fn().mockRejectedValueOnce(new Error("Invalid JSON")),
       });
 
       await act(async () => {
@@ -244,19 +248,19 @@ describe('useProductStore', () => {
 
       expect(result.current.products).toEqual([]);
       expect(result.current.isProductsLoading).toBe(false);
-      expect(result.current.productsError).toBe('Error fetching products');
+      expect(result.current.productsError).toBe("Error fetching products");
     });
 
-    it('should not automatically clear error when fetch is successful', async () => {
+    it("should not automatically clear error when fetch is successful", async () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
       // Set initial error
       act(() => {
-        result.current.setProductsError('Previous error');
+        result.current.setProductsError("Previous error");
       });
 
-      expect(result.current.productsError).toBe('Previous error');
+      expect(result.current.productsError).toBe("Previous error");
 
       mockFetch.mockResolvedValueOnce({
         json: jest.fn().mockResolvedValueOnce(mockProducts),
@@ -267,15 +271,15 @@ describe('useProductStore', () => {
       });
 
       // Error should still be there since fetchProducts doesn't clear it automatically
-      expect(result.current.productsError).toBe('Previous error');
+      expect(result.current.productsError).toBe("Previous error");
       expect(result.current.products).toEqual(mockProducts);
     });
 
-    it('should set loading to false even when fetch fails', async () => {
+    it("should set loading to false even when fetch fails", async () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
-      mockFetch.mockRejectedValueOnce(new Error('Network error'));
+      mockFetch.mockRejectedValueOnce(new Error("Network error"));
 
       await act(async () => {
         await result.current.fetchProducts();
@@ -284,7 +288,7 @@ describe('useProductStore', () => {
       expect(result.current.isProductsLoading).toBe(false);
     });
 
-    it('should handle empty products array from API', async () => {
+    it("should handle empty products array from API", async () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
@@ -298,10 +302,10 @@ describe('useProductStore', () => {
 
       expect(result.current.products).toEqual([]);
       expect(result.current.isProductsLoading).toBe(false);
-      expect(result.current.productsError).toBe('');
+      expect(result.current.productsError).toBe("");
     });
 
-    it('should handle concurrent fetch calls correctly', async () => {
+    it("should handle concurrent fetch calls correctly", async () => {
       const { result } = renderHook(() => useProductStore());
       resetStore(result);
 
@@ -330,6 +334,4 @@ describe('useProductStore', () => {
       expect(result.current.products).toBeDefined();
     });
   });
-
-
-}); 
+});

@@ -1,7 +1,9 @@
-import { ShoppingCart, Trash2 } from 'lucide-react';
-import { Button, Card, Text, Icon } from '@/components/bricks';
-import { useCartStore } from '@/hooks/useCartStore';
-import QuantityControls from './QuantityControls';
+import { ShoppingCart, Trash2 } from "lucide-react";
+
+import { Button, Card, Icon, Text } from "@/components/bricks";
+import { useCartStore } from "@/hooks/useCartStore";
+
+import QuantityControls from "./QuantityControls";
 
 const CartSummary = () => {
   const { cart, addToCart, removeFromCart, clearCart } = useCartStore();
@@ -47,12 +49,7 @@ const CartSummary = () => {
             />
           </div>
           <div className="flex items-center gap-2">
-
-            <Icon
-              icon={Trash2}
-              size="sm"
-              onClick={clearCart}
-            />
+            <Icon icon={Trash2} size="sm" onClick={clearCart} />
           </div>
         </div>
       </Card.Header>
@@ -118,12 +115,7 @@ const CartSummary = () => {
             />
           </div>
           <div className="flex items-center gap-2 justify-end w-full">
-            <Text
-              text="Total:"
-              size="lg"
-              weight="semibold"
-              color="black"
-            />
+            <Text text="Total:" size="lg" weight="semibold" color="black" />
             <Text
               text={formatPrice(cart.total)}
               size="lg"
@@ -137,4 +129,4 @@ const CartSummary = () => {
   );
 };
 
-export default CartSummary; 
+export default CartSummary;
