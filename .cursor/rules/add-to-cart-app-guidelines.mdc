@@ -1,0 +1,58 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Imports:
+  - @.cursor/rules/general-guidelines.mdc
+  - @.cursor/rules/best-practices.mdc
+
+## 1. Context & Directory Map
+Base path: src/
+
+├─ `components/`
+│   ├─ `bricks/` (custom wrappers & new components)
+|       ├─ `shadcn/ui/` (read-only primitives) 
+|   └─ `<module>/` (module specific)
+├─ `interface/<module>/`
+├─ `hooks/<modulr>/`
+├─ `utils/`
+└─ `test-utils/`
+
+
+### 2.1 Shadcn UI
+- Always search src/components/shadcn/ui first.
+- Never modify upstream Shadcn files—wrap, create a wrapper for the component in src/components/bricks
+
+### 2.2 File Conventions for New Bricks
+Every new component in `src/components/bricks/<module>/`
+- `<Name>.tsx` (React component)
+- `<Name>.test.tsx` (Jest + React Testing Library)
+- `<Name>.stories.tsx` (Storybook)
+
+
+### 2.2.1 Component Creation
+- Always prefer existing components from src/components/bricks whenever possible.
+- Keep page-level components minimal: focus on layout and composition, not detailed UI logic.
+- Adhere to atomic design: pages should assemble molecules and organisms, not individual atoms.
+- Do not duplicate logic—reuse shared hooks, or components instead of reimplementing.
+
+### 3 Constants, Services & Types
+- Constants: `src/constants/<module>/…`
+- Hooks: `src/hooks/<module>/…`
+- Interfaces: `src/interfaces/<module>/…`
+
+## 5. UI/UX Implementation
+- Pixel-perfect per **all** Figma links.
+- Replicate layout, styling, hover/interaction states exactly.
+- Provide a **Confidence Score** (High/Medium/Low) for Figma-to-code fidelity.
+- Use "Icon component with Lucide-react Icons", instead of downloading svg.
+- Always look for index.css for styles and reuse in the code, create if not available.
+
+## 6. Output Format
+1. **Confidence Score:** High/Medium/Low + brief rationale.
+2. **Notes & Assumptions:** Data shapes, any design ambiguities.
+3. **Code Artifacts:** Component + test + story, with minimal commentary.
+
+
+> **Use this rule for every prompt that begins with `@add-to-cart-app-guidelines.mdc`.**

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button should match snapshot with default props 1`] = `
+<div>
+  <button
+    aria-label="Test Button button"
+    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-9 px-4 py-2 has-[>svg]:px-3 w-full rounded-md font-medium transition-colors shadow-[0px_1px_2px_0px_var(--color-shadow-10)] border-neutral-200 text-neutral-600 hover:bg-neutral-50 h-9 p-2 rounded-md cursor-pointer"
+    data-slot="button"
+    type="button"
+  >
+    Test Button
+  </button>
+</div>
+`;

@@ -1,0 +1,56 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Always Apply These Guidelines
+
+## Verify Information  
+Always check the provided context carefully to confirm details before responding. Avoid assumptions or guesses unless supported by clear evidence, such as user-provided documentation, inline code comments, or explicitly cited external sources. Reference specific line numbers, user-highlighted snippets, or approved resources to validate your responses.
+
+## Follow JavaScript and React/JSX Style Guides
+Follow the Airbnb JavaScript Style Guide ( @https://github.com/airbnb/javascript ) and its React/JSX recommendations for consistent formatting and best practices. 
+
+## Adhere to Linting and Formatting Standards
+Ensure all generated or modified code strictly adheres to project linting and formatting standards defined in .prettierrc and eslint.config.mjs
+
+## Avoid Unnecessary Summaries  
+Do not summarize changes unless the user specifically requests a brief overview after edits are complete. For example, avoid unsolicited summaries but confirm completion or next steps when appropriate.
+
+## Avoid Irrelevant Additions  
+Only add content explicitly requested by the user. If a change improves performance, readability, or fixes an issue, suggest it clearly and wait for user approval before applying it.
+
+## Preserve Existing Structure  
+Respect the current code structure and logic. Avoid reorganizing code unless explicitly asked or when modularization is necessary for maintainability.
+
+## Code Structure Optimization  
+Promote modular design by breaking complex code into smaller, reusable pieces such as functions or classes to improve maintainability and reusability. Refactor or suggest ways to eliminate duplicate code by using shared utilities, helper functions, or modules where possible. Provide concrete examples when applicable.
+
+## Handle Out-of-Scope Issues  
+If you notice issues or fixes beyond the users request, notify the user and ask for approval before addressing them. Clearly explain the potential impact and benefits of addressing these additional issues.
+
+## Include Error Handling  
+Add proper error handling to make code more robust and user-friendly. For example, implement try-catch blocks for file operations, validate user inputs using regex patterns, and handle edge cases gracefully to prevent crashes or unexpected behavior.
+
+## Check Dependencies  
+When suggesting packages or libraries, confirm they are compatible with existing dependencies and avoid conflicts. Use tools such as `npm audit` to verify compatibility and security.
+
+## Use Existing Packages  
+When a package solves the requested task, recommend it along with its installation command (e.g., `yarn install lodash`). Prioritize packages based on the following criteria:  
+- High monthly downloads, indicating popularity  
+- Recent updates within the last two months, ensuring active maintenance  
+- Strong community support, measurable by GitHub stars, forks, or Stack Overflow activity  
+- No known security issues, verified through tools like `npm audit` or Snyk
+
+## Prioritize Security  
+Always consider security when suggesting or making changes. Use secure coding practices to prevent vulnerabilities such as injection attacks, cross-site scripting (XSS), or data leaks. Follow best practices and validate inputs rigorously.
+
+## Optimize for Performance  
+After ensuring security, evaluate the performance impact of changes. Aim for efficient solutions by identifying bottlenecks and optimize critical code paths.
+
+## Enhance Readability  
+After security and performance, ensure changes are easy to read and understand for future developers. Follow established style guides (Airbnb JavaScript Style Guide) and use static analysis tools like ESLint to maintain code quality.
+
+## Support Maintainability  
+Design changes to be easy to update or extend in the future. Write clear, concise comments where necessary and structure code logically to facilitate onboarding and future modifications.
+

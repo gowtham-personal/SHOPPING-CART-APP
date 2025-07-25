@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text should match snapshot with default props 1`] = `
+<div>
+  <span
+    class="text-sm font-normal text-neutral-950"
+  >
+    Snapshot Text
+  </span>
+</div>
+`;

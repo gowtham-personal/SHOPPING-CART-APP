@@ -1,0 +1,55 @@
+---
+description: This rule guides the agent in applying world-class best practices across React, Next.js, Tailwind CSS, Shadcn UI, NextAuth, Storybook and Jest when generating or modifying code in the v2-app codebase.
+globs: 
+alwaysApply: false
+---
+# Best Practices for crypto-asset-tracker-app
+
+## React & TypeScript
+- Write all components as functional components with hooks; avoid class components.
+- Strictly type all props, state, and hooks using TypeScript. Never use `any`.
+- Split complex UI into small, reusable, and composable components.
+- Favor composition over inheritance; use hooks (`useState`, `useEffect`, `useReducer`).
+- Use `React.memo`, `useCallback`, and `useMemo` to optimize rendering for expensive computations or child components and use them only when needed and don't make premature optimisations.
+- Try to adapt the design patterns tha suits the requiremnts ex: `HOC`, `Render Props`, `Custom hook` & `Compound` component Design Patterns
+- Use `clsx` and `class-variance-authority` for conditional and variant-based styling.
+- Ensure accessibility: use semantic HTML and ARIA attributes.
+
+## Tailwind CSS
+- Follow the utility-first approach: keep CSS in markup unless global styles are needed.
+- Purge unused styles for minimal CSS bundle size.
+- Use `@apply` sparingly in `globals.css` for truly global patterns.
+- Combine classes cleanly with `clsx` and `tailwind-merge`.
+- Keep component-specific styles alongside components for maintainability.
+
+## Shadcn UI
+- Use prebuilt Shadcn primitives (`Card`, `Button`, etc.) and follow the design system.
+- Before adding a new Shadcn component, always search thesrc/components/shadcn directory for an existing implementation to reuse or extend.
+- Never modify the original Shadcn UI source files under src/components/shadcn ; treat them as read-only and apply customizations only via wrappers/overrides in src/components/bricks.
+- When you need a new Shadcn component, use below command:
+  
+  ```bash
+  npx shadcn@latest add <component-name>
+  ```
+  
+  This will generate the component under src/components/shadcn/ui for you to extend or compose.
+
+## Testing with Jest
+- Use `@testing-library/react` and `jest-dom` for robust component testing from `@/test-utils`, create/add any missing imports if not avaialble.
+- Co-locate tests with components using the `.test.tsx` suffix.
+- Mock external dependencies with `jest.mock`.
+- Write tests focusing on user behavior, not implementation details; use explicit assertions.
+- Maintain tests using `beforeEach`, `afterEach`, and cleanup routines.
+- Enforce coverage thresholds mentioned in jest.config.js .
+- Use snapshot tests only sparingly and for outputs that are stable and semantically meaningful; prefer direct assertions for clarity.
+- Name every test case (it block) starting with “should”. Example: it("should render the component with default props")  
+- Avoid using data-testid unless absolutely necessary. Follow Testing Library’s query priority guidelines @https://testing-library.com/docs/queries/about#priority
+  • Prefer queries that reflect how users interact with the UI (e.g., getByRole, getByLabelText, getByText, etc.)
+  • Use data-testid only as a last resort when no accessible selectors are available.
+- Test a single behavior per `it` block—keep tests focused.
+- Pull shared setup from jest.setup.ts ; avoid duplicating config in individual test files.
+- When mocking functions, refer to existing mock files (e.g. `src/__mocks__/xyz.ts`); if none exist, create a module-scoped mock file.
+- Consult existing tests as examples.
+
+## Storybook
+- In Storybook stories, use `{ action }` from `@storybook/addon-actions` for all `onClick` (or similar) handlers.
