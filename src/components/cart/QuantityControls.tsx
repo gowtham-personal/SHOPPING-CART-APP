@@ -14,7 +14,7 @@ const QuantityControls = ({
   onDecrement,
 }: QuantityControlsProps) => {
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1" data-testid="quantity-controls">
       {/* Decrement Button */}
       <Button
         variant="outline"
@@ -28,6 +28,7 @@ const QuantityControls = ({
           )
         }
         className="h-8 w-8 p-0"
+        aria-label="Decrease quantity"
       />
 
       {/* Quantity Text */}
@@ -37,6 +38,7 @@ const QuantityControls = ({
         weight="medium"
         color="black"
         className="min-w-[2rem] text-center"
+        aria-label={`Quantity: ${quantity}`}
       />
 
       {/* Increment Button */}
@@ -46,6 +48,7 @@ const QuantityControls = ({
         onClick={onIncrement}
         leftIcon={<Icon icon={Plus} size="sm" />}
         className="h-8 w-8 p-0"
+        aria-label="Increase quantity"
       />
     </div>
   );

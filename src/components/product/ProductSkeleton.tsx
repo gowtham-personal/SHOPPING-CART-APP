@@ -2,7 +2,10 @@ import { Card } from "@/components/bricks";
 
 const ProductSkeleton = () => {
   return (
-    <Card className="h-full flex flex-col animate-pulse">
+    <Card
+      className="h-full flex flex-col animate-pulse"
+      data-testid="product-skeleton"
+    >
       <Card.Header className="pb-4">
         <div className="aspect-square overflow-hidden rounded-md bg-gray-200"></div>
       </Card.Header>

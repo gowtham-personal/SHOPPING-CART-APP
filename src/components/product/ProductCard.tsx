@@ -44,7 +44,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const quantity = getItemQuantity(id);
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col" data-testid={`product-card-${id}`}>
       <Card.Header className="pb-4">
         <div className="aspect-square overflow-hidden rounded-md h-40">
           <img

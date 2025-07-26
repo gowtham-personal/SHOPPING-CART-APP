@@ -1,24 +1,27 @@
+import Header from "@/components/Header";
+import { useCartStore } from "@/hooks/useCartStore";
 import { fireEvent, render, screen } from "@/test-utils";
 
-import Header from "./index";
-
 // Mock the useCartStore hook
-const mockUseCartStore = jest.fn();
 jest.mock("@/hooks/useCartStore", () => ({
-  useCartStore: () => mockUseCartStore(),
+  useCartStore: jest.fn(),
 }));
 
-describe("Header", () => {
-  const defaultCartStore = {
-    cart: {
-      items: [],
-      total: 0,
-      itemCount: 0,
-    },
-    showCart: false,
-    setShowCart: jest.fn(),
-  };
+const mockUseCartStore = useCartStore as jest.MockedFunction<
+  typeof useCartStore
+>;
 
+const defaultCartStore = {
+  cart: {
+    items: [],
+    total: 0,
+    itemCount: 0,
+  },
+  showCart: false,
+  setShowCart: jest.fn(),
+};
+
+describe("Header", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockUseCartStore.mockReturnValue(defaultCartStore);

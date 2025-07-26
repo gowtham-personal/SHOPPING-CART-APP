@@ -1,6 +1,7 @@
 import ProductCard, {
   type ProductCardProps,
 } from "@/components/product/ProductCard";
+import { useCartStore } from "@/hooks/useCartStore";
 import type { Product } from "@/interfaces/product";
 import { render, screen, userEvent } from "@/test-utils";
 
@@ -8,38 +9,13 @@ import { render, screen, userEvent } from "@/test-utils";
 const mockAddToCart = jest.fn();
 const mockRemoveFromCart = jest.fn();
 
-jest.mock("@/hooks/useCartStore");
-
-const { useCartStore } = require("@/hooks/useCartStore");
+jest.mock("@/hooks/useCartStore", () => ({
+  useCartStore: jest.fn(),
+}));
 
 const mockUseCartStore = useCartStore as jest.MockedFunction<
   typeof useCartStore
 >;
-
-// Mock QuantityControls component
-jest.mock("../cart/QuantityControls", () => {
-  return function MockQuantityControls({
-    quantity,
-    onIncrement,
-    onDecrement,
-  }: {
-    quantity: number;
-    onIncrement: () => void;
-    onDecrement: () => void;
-  }) {
-    return (
-      <div data-testid="quantity-controls">
-        <button onClick={onDecrement} aria-label="Decrease quantity">
-          -
-        </button>
-        <span>{quantity}</span>
-        <button onClick={onIncrement} aria-label="Increase quantity">
-          +
-        </button>
-      </div>
-    );
-  };
-});
 
 const mockProduct: Product = {
   id: 1,
@@ -154,7 +130,12 @@ describe("ProductCard", () => {
     });
 
     getRenderedComponent();
-    expect(screen.getByTestId("quantity-controls")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /decrease quantity/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /increase quantity/i }),
+    ).toBeInTheDocument();
     expect(screen.getByText("2")).toBeInTheDocument();
   });
 

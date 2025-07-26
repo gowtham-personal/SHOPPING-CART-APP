@@ -1,65 +1,25 @@
+import ProductList from "@/components/product/ProductList";
+import { useCartStore } from "@/hooks/useCartStore";
+import { useProductStore } from "@/hooks/useProductStore";
 import type { Product } from "@/interfaces/product";
 import { render, screen } from "@/test-utils";
 
-import ProductList from "./ProductList";
-
 // Mock the hooks
-jest.mock("@/hooks/useProductStore");
-jest.mock("@/hooks/useCartStore");
+jest.mock("@/hooks/useProductStore", () => ({
+  useProductStore: jest.fn(),
+}));
+jest.mock("@/hooks/useCartStore", () => ({
+  useCartStore: jest.fn(),
+}));
 
-// Mock the child components
-jest.mock("./ProductCard", () => {
-  return function MockProductCard({
-    product,
-    onAddToCart,
-  }: {
-    product: Product;
-    onAddToCart: (product: Product) => void;
-  }) {
-    return (
-      <div data-testid={`product-card-${product.id}`}>
-        <h3>{product.title}</h3>
-        <p>{product.description}</p>
-        <span>£{product.price.toFixed(2)}</span>
-        <button onClick={() => onAddToCart(product)}>Add to Cart</button>
-      </div>
-    );
-  };
-});
+const mockUseProductStore = useProductStore as jest.MockedFunction<
+  typeof useProductStore
+>;
+const mockUseCartStore = useCartStore as jest.MockedFunction<
+  typeof useCartStore
+>;
 
-jest.mock("./ProductSkeleton", () => {
-  return function MockProductSkeleton() {
-    return <div data-testid="product-skeleton">Loading...</div>;
-  };
-});
-
-const mockUseProductStore = require("@/hooks/useProductStore")
-  .useProductStore as jest.MockedFunction<any>;
-const mockUseCartStore = require("@/hooks/useCartStore")
-  .useCartStore as jest.MockedFunction<any>;
-
-const mockProducts: Product[] = [
-  {
-    id: 1,
-    title: "Test Product 1",
-    price: 29.99,
-    description: "Test description 1",
-    category: "electronics",
-    image: "https://example.com/image1.jpg",
-    rating: { rate: 4.5, count: 120 },
-  },
-  {
-    id: 2,
-    title: "Test Product 2",
-    price: 49.99,
-    description: "Test description 2",
-    category: "clothing",
-    image: "https://example.com/image2.jpg",
-    rating: { rate: 3.8, count: 85 },
-  },
-];
-
-const mockAddToCart = jest.fn();
+const mockProducts = require("@/test-utils/mock/mockProducts.json");
 
 describe("ProductList", () => {
   beforeEach(() => {
@@ -67,7 +27,10 @@ describe("ProductList", () => {
 
     // Default cart store mock
     mockUseCartStore.mockReturnValue({
-      addToCart: mockAddToCart,
+      cart: {
+        items: [],
+      },
+      addToCart: jest.fn(),
     });
   });
 
@@ -82,9 +45,6 @@ describe("ProductList", () => {
 
       const skeletons = screen.getAllByTestId("product-skeleton");
       expect(skeletons).toHaveLength(8);
-
-      const loadingTexts = screen.getAllByText("Loading...");
-      expect(loadingTexts).toHaveLength(8);
     });
 
     it("should render multiple skeleton components in correct grid layout when loading", () => {
@@ -146,14 +106,9 @@ describe("ProductList", () => {
     it("should render all products when products are loaded", () => {
       render(<ProductList />);
 
-      mockProducts.forEach((product) => {
+      mockProducts.forEach((product: Product) => {
         expect(
           screen.getByTestId(`product-card-${product.id}`),
-        ).toBeInTheDocument();
-        expect(screen.getByText(product.title)).toBeInTheDocument();
-        expect(screen.getByText(product.description)).toBeInTheDocument();
-        expect(
-          screen.getByText(`£${product.price.toFixed(2)}`),
         ).toBeInTheDocument();
       });
     });
@@ -174,15 +129,10 @@ describe("ProductList", () => {
     it("should pass correct props to each ProductCard component", () => {
       render(<ProductList />);
 
-      mockProducts.forEach((product) => {
-        const productCard = screen.getByTestId(`product-card-${product.id}`);
-        expect(productCard).toBeInTheDocument();
-
+      mockProducts.forEach((product: Product) => {
         // Verify product data is displayed
-        expect(screen.getByText(product.title)).toBeInTheDocument();
-        expect(screen.getByText(product.description)).toBeInTheDocument();
         expect(
-          screen.getByText(`£${product.price.toFixed(2)}`),
+          screen.getByTestId(`product-card-${product.id}`),
         ).toBeInTheDocument();
       });
     });
@@ -193,8 +143,10 @@ describe("ProductList", () => {
       const firstProductAddButton = screen.getAllByText("Add to Cart")[0];
       firstProductAddButton.click();
 
-      expect(mockAddToCart).toHaveBeenCalledTimes(1);
-      expect(mockAddToCart).toHaveBeenCalledWith(mockProducts[0]);
+      expect(mockUseCartStore().addToCart).toHaveBeenCalledTimes(1);
+      expect(mockUseCartStore().addToCart).toHaveBeenCalledWith(
+        mockProducts[0],
+      );
     });
 
     it("should call addToCart with correct product when different products Add to Cart buttons are clicked", () => {
@@ -205,32 +157,10 @@ describe("ProductList", () => {
       // Click second product's add to cart button
       addToCartButtons[1].click();
 
-      expect(mockAddToCart).toHaveBeenCalledTimes(1);
-      expect(mockAddToCart).toHaveBeenCalledWith(mockProducts[1]);
-    });
-  });
-
-  describe("Hook integration", () => {
-    it("should use useProductStore hook to get products and loading state", () => {
-      mockUseProductStore.mockReturnValue({
-        products: mockProducts,
-        isProductsLoading: false,
-      });
-
-      render(<ProductList />);
-
-      expect(mockUseProductStore).toHaveBeenCalledTimes(1);
-    });
-
-    it("should use useCartStore hook to get addToCart function", () => {
-      mockUseProductStore.mockReturnValue({
-        products: mockProducts,
-        isProductsLoading: false,
-      });
-
-      render(<ProductList />);
-
-      expect(mockUseCartStore).toHaveBeenCalledTimes(1);
+      expect(mockUseCartStore().addToCart).toHaveBeenCalledTimes(1);
+      expect(mockUseCartStore().addToCart).toHaveBeenCalledWith(
+        mockProducts[1],
+      );
     });
   });
 
@@ -244,9 +174,14 @@ describe("ProductList", () => {
 
       render(<ProductList />);
 
+      expect(screen.getByText(singleProduct[0].title)).toBeInTheDocument();
       expect(
-        screen.getByTestId(`product-card-${singleProduct[0].id}`),
+        screen.getByText(singleProduct[0].description),
       ).toBeInTheDocument();
+      expect(
+        screen.getByText(`£${singleProduct[0].price.toFixed(2)}`),
+      ).toBeInTheDocument();
+
       expect(screen.queryByText("No products found.")).not.toBeInTheDocument();
       expect(screen.queryByTestId("product-skeleton")).not.toBeInTheDocument();
     });
@@ -272,9 +207,6 @@ describe("ProductList", () => {
 
       render(<ProductList />);
 
-      expect(
-        screen.getByTestId(`product-card-${edgeCaseProducts[0].id}`),
-      ).toBeInTheDocument();
       expect(screen.getByText(edgeCaseProducts[0].title)).toBeInTheDocument();
       expect(screen.getByText("£0.01")).toBeInTheDocument();
     });

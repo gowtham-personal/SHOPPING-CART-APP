@@ -1,48 +1,19 @@
-import type { Cart, Product } from "@/interfaces/product";
+import CartSummary from "@/components/cart/CartSummary";
+import { useCartStore } from "@/hooks/useCartStore";
+import type { Product } from "@/interfaces/product";
 import { fireEvent, render, screen } from "@/test-utils";
 
-import CartSummary from "./CartSummary";
-
-// Mock the useCartStore hook
-const mockCartStore = {
-  cart: {
-    items: [],
-    total: 0,
-    itemCount: 0,
-  } as Cart,
-  addToCart: jest.fn(),
-  removeFromCart: jest.fn(),
-  clearCart: jest.fn(),
-};
+const mockAddToCart = jest.fn();
+const mockRemoveFromCart = jest.fn();
+const mockClearCart = jest.fn();
 
 jest.mock("@/hooks/useCartStore", () => ({
-  useCartStore: () => mockCartStore,
+  useCartStore: jest.fn(),
 }));
 
-// Mock QuantityControls component
-jest.mock("./QuantityControls", () => {
-  return function MockQuantityControls({
-    quantity,
-    onIncrement,
-    onDecrement,
-  }: {
-    quantity: number;
-    onIncrement: () => void;
-    onDecrement: () => void;
-  }) {
-    return (
-      <div data-testid="quantity-controls">
-        <button onClick={onDecrement} aria-label="Decrease quantity">
-          -
-        </button>
-        <span>{quantity}</span>
-        <button onClick={onIncrement} aria-label="Increase quantity">
-          +
-        </button>
-      </div>
-    );
-  };
-});
+const mockUseCartStore = useCartStore as jest.MockedFunction<
+  typeof useCartStore
+>;
 
 const mockProduct: Product = {
   id: 1,
@@ -64,12 +35,17 @@ const getRenderedComponent = () => {
 describe("CartSummary", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Reset mock cart store to empty state
-    mockCartStore.cart = {
-      items: [],
-      total: 0,
-      itemCount: 0,
-    };
+
+    mockUseCartStore.mockReturnValue({
+      cart: {
+        items: [],
+        total: 0,
+        itemCount: 0,
+      },
+      addToCart: jest.fn(),
+      removeFromCart: jest.fn(),
+      clearCart: jest.fn(),
+    });
   });
 
   describe("Empty Cart State", () => {
@@ -104,16 +80,24 @@ describe("CartSummary", () => {
 
   describe("Cart with Items", () => {
     beforeEach(() => {
-      mockCartStore.cart = {
-        items: [
-          {
-            product: mockProduct,
-            quantity: 2,
-          },
-        ],
-        total: 59.98,
-        itemCount: 2,
-      };
+      mockUseCartStore.mockReturnValue({
+        cart: {
+          items: [
+            {
+              product: mockProduct,
+              quantity: 2,
+            },
+          ],
+          total: 59.98,
+          itemCount: 2,
+        },
+        showCart: false,
+        setCart: jest.fn(),
+        setShowCart: jest.fn(),
+        addToCart: mockAddToCart,
+        removeFromCart: mockRemoveFromCart,
+        clearCart: mockClearCart,
+      });
     });
 
     it("should render cart header with correct item count", () => {
@@ -177,7 +161,7 @@ describe("CartSummary", () => {
       expect(trashIcon).toBeInTheDocument();
 
       fireEvent.click(trashIcon!);
-      expect(mockCartStore.clearCart).toHaveBeenCalledTimes(1);
+      expect(mockClearCart).toHaveBeenCalledTimes(1);
     });
 
     it("should handle quantity increment through QuantityControls", () => {
@@ -186,7 +170,7 @@ describe("CartSummary", () => {
       const incrementButton = screen.getByLabelText("Increase quantity");
       fireEvent.click(incrementButton);
 
-      expect(mockCartStore.addToCart).toHaveBeenCalledWith(mockProduct);
+      expect(mockAddToCart).toHaveBeenCalledWith(mockProduct);
     });
 
     it("should handle quantity decrement through QuantityControls", () => {
@@ -195,7 +179,7 @@ describe("CartSummary", () => {
       const decrementButton = screen.getByLabelText("Decrease quantity");
       fireEvent.click(decrementButton);
 
-      expect(mockCartStore.removeFromCart).toHaveBeenCalledWith(mockProduct.id);
+      expect(mockRemoveFromCart).toHaveBeenCalledWith(mockProduct.id);
     });
   });
 
@@ -208,20 +192,28 @@ describe("CartSummary", () => {
         price: 15.5,
       };
 
-      mockCartStore.cart = {
-        items: [
-          {
-            product: mockProduct,
-            quantity: 1,
-          },
-          {
-            product: secondProduct,
-            quantity: 3,
-          },
-        ],
-        total: 76.49,
-        itemCount: 4,
-      };
+      mockUseCartStore.mockReturnValue({
+        cart: {
+          items: [
+            {
+              product: mockProduct,
+              quantity: 1,
+            },
+            {
+              product: secondProduct,
+              quantity: 3,
+            },
+          ],
+          total: 76.49,
+          itemCount: 4,
+        },
+        showCart: false,
+        setCart: jest.fn(),
+        setShowCart: jest.fn(),
+        addToCart: mockAddToCart,
+        removeFromCart: mockRemoveFromCart,
+        clearCart: mockClearCart,
+      });
     });
 
     it("should render all cart items", () => {
@@ -267,16 +259,24 @@ describe("CartSummary", () => {
         price: 123.456, // Test decimal formatting
       };
 
-      mockCartStore.cart = {
-        items: [
-          {
-            product: productWithComplexPrice,
-            quantity: 1,
-          },
-        ],
-        total: 123.456,
-        itemCount: 1,
-      };
+      mockUseCartStore.mockReturnValue({
+        cart: {
+          items: [
+            {
+              product: productWithComplexPrice,
+              quantity: 1,
+            },
+          ],
+          total: 123.456,
+          itemCount: 1,
+        },
+        showCart: false,
+        setCart: jest.fn(),
+        setShowCart: jest.fn(),
+        addToCart: mockAddToCart,
+        removeFromCart: mockRemoveFromCart,
+        clearCart: mockClearCart,
+      });
     });
 
     it("should format prices to 2 decimal places", () => {
@@ -291,16 +291,24 @@ describe("CartSummary", () => {
 
   describe("Accessibility", () => {
     beforeEach(() => {
-      mockCartStore.cart = {
-        items: [
-          {
-            product: mockProduct,
-            quantity: 1,
-          },
-        ],
-        total: 29.99,
-        itemCount: 1,
-      };
+      mockUseCartStore.mockReturnValue({
+        cart: {
+          items: [
+            {
+              product: mockProduct,
+              quantity: 1,
+            },
+          ],
+          total: 29.99,
+          itemCount: 1,
+        },
+        showCart: false,
+        setCart: jest.fn(),
+        setShowCart: jest.fn(),
+        addToCart: mockAddToCart,
+        removeFromCart: mockRemoveFromCart,
+        clearCart: mockClearCart,
+      });
     });
 
     it("should have proper alt text for product images", () => {
