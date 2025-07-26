@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import SomethingWentWrong from './index';
+import SomethingWentWrong from "./index";
 
 const meta = {
-  title: 'Bricks/SomethingWentWrong',
+  title: "Bricks/SomethingWentWrong",
   component: SomethingWentWrong,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     // No props to control since component doesn't accept any
   },
@@ -59,4 +59,4 @@ export const ErrorState: Story = {
       </div>
     </div>
   ),
-}; 
+};

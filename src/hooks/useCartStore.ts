@@ -1,5 +1,6 @@
-import type { Cart, CartItem, Product } from '@/interfaces/product';
-import { create } from 'zustand';
+import { create } from "zustand";
+
+import type { Cart, CartItem, Product } from "@/interfaces/product";
 
 interface CartStore {
   cart: Cart;
@@ -21,7 +22,7 @@ const initialCartState: Cart = {
 const calculateCartTotals = (items: CartItem[]): Cart => {
   const total = items.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
-    0
+    0,
   );
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -36,14 +37,14 @@ export const useCartStore = create<CartStore>((set) => ({
   addToCart: (product) =>
     set((state) => {
       const existingItem = state.cart.items.find(
-        (item) => item.product.id === product.id
+        (item) => item.product.id === product.id,
       );
 
       const updatedItems = existingItem
         ? state.cart.items.map((item) =>
             item.product.id === product.id
               ? { ...item, quantity: item.quantity + 1 }
-              : item
+              : item,
           )
         : [...state.cart.items, { product, quantity: 1 }];
 
@@ -52,12 +53,13 @@ export const useCartStore = create<CartStore>((set) => ({
 
   removeFromCart: (productId) =>
     set((state) => {
-      const updatedItems = state.cart.items.map((item) =>
-            item.product.id === productId
-              ? { ...item, quantity: item.quantity - 1 }
-              : item
-          ).filter((item) => item.quantity > 0)
-
+      const updatedItems = state.cart.items
+        .map((item) =>
+          item.product.id === productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item,
+        )
+        .filter((item) => item.quantity > 0);
 
       return { cart: calculateCartTotals(updatedItems) };
     }),

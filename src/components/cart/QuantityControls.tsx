@@ -1,5 +1,6 @@
-import { Plus, Minus, Trash2 } from 'lucide-react';
-import { Button, Text, Icon } from '@/components/bricks';
+import { Minus, Plus, Trash2 } from "lucide-react";
+
+import { Button, Icon, Text } from "@/components/bricks";
 
 interface QuantityControlsProps {
   quantity: number;
@@ -7,16 +8,27 @@ interface QuantityControlsProps {
   onDecrement: () => void;
 }
 
-const QuantityControls = ({ quantity, onIncrement, onDecrement }: QuantityControlsProps) => {
+const QuantityControls = ({
+  quantity,
+  onIncrement,
+  onDecrement,
+}: QuantityControlsProps) => {
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1" data-testid="quantity-controls">
       {/* Decrement Button */}
       <Button
         variant="outline"
         size="sm"
         onClick={onDecrement}
-        leftIcon={quantity > 1 ? <Icon icon={Minus} size="sm" /> : <Icon icon={Trash2} size="sm" />}
+        leftIcon={
+          quantity > 1 ? (
+            <Icon icon={Minus} size="sm" />
+          ) : (
+            <Icon icon={Trash2} size="sm" />
+          )
+        }
         className="h-8 w-8 p-0"
+        aria-label="Decrease quantity"
       />
 
       {/* Quantity Text */}
@@ -26,6 +38,7 @@ const QuantityControls = ({ quantity, onIncrement, onDecrement }: QuantityContro
         weight="medium"
         color="black"
         className="min-w-[2rem] text-center"
+        aria-label={`Quantity: ${quantity}`}
       />
 
       {/* Increment Button */}
@@ -35,9 +48,10 @@ const QuantityControls = ({ quantity, onIncrement, onDecrement }: QuantityContro
         onClick={onIncrement}
         leftIcon={<Icon icon={Plus} size="sm" />}
         className="h-8 w-8 p-0"
+        aria-label="Increase quantity"
       />
     </div>
   );
 };
 
-export default QuantityControls; 
+export default QuantityControls;

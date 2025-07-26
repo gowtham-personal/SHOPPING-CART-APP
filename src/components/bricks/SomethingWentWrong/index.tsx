@@ -1,5 +1,6 @@
-import { Text, Icon } from '@/components/bricks';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle } from "lucide-react";
+
+import { Icon, Text } from "@/components/bricks";
 
 const SomethingWentWrong = () => {
   return (

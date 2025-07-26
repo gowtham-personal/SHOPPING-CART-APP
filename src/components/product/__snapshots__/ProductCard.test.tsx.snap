@@ -4,6 +4,7 @@ exports[`ProductCard should match snapshot with default props 1`] = `
 <div>
   <div
     class="rounded-lg border bg-white text-gray-950 shadow-sm border shadow-sm h-full flex flex-col"
+    data-testid="product-card-1"
   >
     <div
       class="flex flex-col space-y-1.5 p-6 pb-3 pb-4"

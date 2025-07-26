@@ -1,5 +1,5 @@
-import { action } from '@storybook/addon-actions';
-import type { Meta, StoryObj } from '@storybook/react';
+import { action } from "@storybook/addon-actions";
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   AlertCircle,
   AlertTriangle,
@@ -13,34 +13,34 @@ import {
   Star,
   User,
   X,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Text } from '../Text';
-import { Icon } from './index';
+import { Text } from "../Text";
+import { Icon } from "./index";
 
 const meta = {
-  title: 'Bricks/Icon',
+  title: "Bricks/Icon",
   component: Icon,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     icon: {
-      control: { type: 'select' },
+      control: { type: "select" },
       options: [
-        'AlertCircle',
-        'AlertTriangle',
-        'ArrowLeftRight',
-        'Check',
-        'ChevronDown',
-        'FileText',
-        'Home',
-        'Info',
-        'Settings',
-        'Star',
-        'User',
-        'X',
+        "AlertCircle",
+        "AlertTriangle",
+        "ArrowLeftRight",
+        "Check",
+        "ChevronDown",
+        "FileText",
+        "Home",
+        "Info",
+        "Settings",
+        "Star",
+        "User",
+        "X",
       ],
       mapping: {
         AlertCircle,
@@ -56,35 +56,35 @@ const meta = {
         User,
         X,
       },
-      description: 'The Lucide icon to display',
+      description: "The Lucide icon to display",
     },
     size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-      description: 'The size of the icon',
+      control: { type: "select" },
+      options: ["xs", "sm", "md", "lg", "xl"],
+      description: "The size of the icon",
     },
     color: {
-      control: { type: 'select' },
-      options: ['grey', 'red', 'blue', 'green', 'white', 'grey-500', 'orange'],
-      description: 'The color of the icon and background of wrapper (if used)',
+      control: { type: "select" },
+      options: ["grey", "red", "blue", "green", "white", "grey-500", "orange"],
+      description: "The color of the icon and background of wrapper (if used)",
     },
     type: {
-      control: { type: 'select' },
-      options: ['default', 'solid'],
-      description: 'The type of icon style',
+      control: { type: "select" },
+      options: ["default", "solid"],
+      description: "The type of icon style",
     },
     strokeWidth: {
-      control: { type: 'number' },
-      description: 'The stroke width of the icon',
+      control: { type: "number" },
+      description: "The stroke width of the icon",
     },
     wrapper: {
-      control: { type: 'select' },
-      options: ['circle', 'rounded', 'none'],
-      description: 'The type of wrapper for the icon',
+      control: { type: "select" },
+      options: ["circle", "rounded", "none"],
+      description: "The type of wrapper for the icon",
     },
     onClick: {
-      action: 'clicked',
-      description: 'Function to call when the icon is clicked',
+      action: "clicked",
+      description: "Function to call when the icon is clicked",
     },
   },
 } satisfies Meta<typeof Icon>;
@@ -95,9 +95,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     icon: AlertTriangle,
-    size: 'md',
-    color: 'grey',
-    type: 'default',
+    size: "md",
+    color: "grey",
+    type: "default",
     strokeWidth: 2,
   },
 };
@@ -268,11 +268,11 @@ export const FigmaExamples: Story = {
 export const WithClickHandler: Story = {
   args: {
     icon: Settings,
-    size: 'md',
-    color: 'blue',
-    onClick: action('Icon clicked'),
+    size: "md",
+    color: "blue",
+    onClick: action("Icon clicked"),
   },
-  render: args => (
+  render: (args) => (
     <div className="flex flex-col gap-8">
       <div className="flex items-center gap-4">
         <h3 className="text-sm font-medium w-20">Default:</h3>

@@ -1,31 +1,39 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { ShoppingCart, CreditCard, User } from 'lucide-react';
+import { action } from "@storybook/addon-actions";
+import type { Meta, StoryObj } from "@storybook/react";
+import { CreditCard, ShoppingCart, User } from "lucide-react";
 
-import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from '.';
-import { Button } from '../Button';
+import { Button } from "../Button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from ".";
 
 const meta: Meta<typeof Card> = {
-  title: 'Bricks/Card',
+  title: "Bricks/Card",
   component: Card,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A flexible card component with compound pattern support for headers, content, and footers.',
+        component:
+          "A flexible card component with compound pattern support for headers, content, and footers.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['default', 'elevated', 'outlined'],
-      description: 'Visual variant of the card',
+      control: "select",
+      options: ["default", "elevated", "outlined"],
+      description: "Visual variant of the card",
     },
     className: {
-      control: 'text',
-      description: 'Additional CSS classes',
+      control: "text",
+      description: "Additional CSS classes",
     },
   },
 };
@@ -39,13 +47,15 @@ export const Default: Story = {
       <>
         <CardHeader>
           <CardTitle>Default Card</CardTitle>
-          <CardDescription>This is a basic card with default styling.</CardDescription>
+          <CardDescription>
+            This is a basic card with default styling.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <p>This is the main content area of the card.</p>
         </CardContent>
         <CardFooter>
-          <Button text="Action" onClick={action('button-clicked')} />
+          <Button text="Action" onClick={action("button-clicked")} />
         </CardFooter>
       </>
     ),
@@ -54,15 +64,19 @@ export const Default: Story = {
 
 export const Elevated: Story = {
   args: {
-    variant: 'elevated',
+    variant: "elevated",
     children: (
       <>
         <CardHeader>
           <CardTitle>Elevated Card</CardTitle>
-          <CardDescription>This card has enhanced shadow for emphasis.</CardDescription>
+          <CardDescription>
+            This card has enhanced shadow for emphasis.
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Perfect for highlighting important content or call-to-action cards.</p>
+          <p>
+            Perfect for highlighting important content or call-to-action cards.
+          </p>
         </CardContent>
       </>
     ),
@@ -71,12 +85,14 @@ export const Elevated: Story = {
 
 export const Outlined: Story = {
   args: {
-    variant: 'outlined',
+    variant: "outlined",
     children: (
       <>
         <CardHeader>
           <CardTitle>Outlined Card</CardTitle>
-          <CardDescription>This card uses a prominent border instead of shadow.</CardDescription>
+          <CardDescription>
+            This card uses a prominent border instead of shadow.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <p>Great for forms or when you need clear visual separation.</p>
@@ -91,13 +107,18 @@ export const CompoundComponents: Story = {
     <Card>
       <Card.Header>
         <Card.Title>Compound Pattern</Card.Title>
-        <Card.Description>Using the compound component pattern.</Card.Description>
+        <Card.Description>
+          Using the compound component pattern.
+        </Card.Description>
       </Card.Header>
       <Card.Content>
-        <p>You can use Card.Header, Card.Content, and Card.Footer for convenience.</p>
+        <p>
+          You can use Card.Header, Card.Content, and Card.Footer for
+          convenience.
+        </p>
       </Card.Content>
       <Card.Footer>
-        <Button text="Compound Action" onClick={action('compound-action')} />
+        <Button text="Compound Action" onClick={action("compound-action")} />
       </Card.Footer>
     </Card>
   ),
@@ -122,17 +143,17 @@ export const ProductCard: Story = {
         </ul>
       </CardContent>
       <CardFooter className="flex-col space-y-2">
-        <Button 
-          text="Add to Cart" 
-          variant="solid" 
-          color="blue" 
-          onClick={action('add-to-cart')} 
+        <Button
+          text="Add to Cart"
+          variant="solid"
+          color="blue"
+          onClick={action("add-to-cart")}
         />
-        <Button 
-          text="Learn More" 
-          variant="outline" 
-          color="blue" 
-          onClick={action('learn-more')} 
+        <Button
+          text="Learn More"
+          variant="outline"
+          color="blue"
+          onClick={action("learn-more")}
         />
       </CardFooter>
     </Card>
@@ -166,11 +187,11 @@ export const UserProfile: Story = {
         </div>
       </CardContent>
       <CardFooter>
-        <Button 
-          text="View Profile" 
-          variant="outline" 
-          className="w-full" 
-          onClick={action('view-profile')} 
+        <Button
+          text="View Profile"
+          variant="outline"
+          className="w-full"
+          onClick={action("view-profile")}
         />
       </CardFooter>
     </Card>
@@ -212,11 +233,11 @@ export const PaymentCard: Story = {
         </div>
       </CardContent>
       <CardFooter>
-        <Button 
-          text="Update Payment" 
-          variant="solid" 
-          color="blue" 
-          onClick={action('update-payment')} 
+        <Button
+          text="Update Payment"
+          variant="solid"
+          color="blue"
+          onClick={action("update-payment")}
         />
       </CardFooter>
     </Card>
@@ -229,8 +250,10 @@ export const MinimalCard: Story = {
     children: (
       <div className="text-center">
         <h3 className="text-lg font-semibold mb-2">Simple Card</h3>
-        <p className="text-gray-600">Just a simple card without compound components.</p>
+        <p className="text-gray-600">
+          Just a simple card without compound components.
+        </p>
       </div>
     ),
   },
-}; 
+};
